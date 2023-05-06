@@ -11,32 +11,26 @@ class RangeY extends Range {
   }
 
   updateY(y) {
-    let hPos = y;
+    let pos = y;
 
-    if (hPos > this.dom.overlay.offsetHeight) {
-      hPos = this.dom.overlay.offsetHeight;
+    if (pos > this.dom.overlay.offsetHeight) {
+      pos = this.dom.overlay.offsetHeight;
     }
 
-    if (hPos < 0) {
-      hPos = 0;
+    if (pos < 0) {
+      pos = 0;
     }
 
-    this.value = (hPos / this.dom.overlay.offsetHeight) * this.maxValue;
+    this.value = (pos / this.dom.overlay.offsetHeight) * this.maxValue;
   }
 
   refreshRange(value) {
     this.dom.thumb.style.bottom = (value / this.maxValue) * this.dom.overlay.offsetHeight - this.dom.thumb.offsetHeight / 2 + "px";
   }
 
-  eventHandler(e) {
+  eventHandler(e, elem) {
     const bounds = this.getBoundingClientRect();
-    let y = bounds.bottom - e.clientY;
-
-    if (e instanceof TouchEvent) {
-      y = bounds.bottom - e.changedTouches[0].clientY;
-    } else {
-      y = bounds.bottom - e.clientY;
-    }
+    const y = bounds.bottom - elem.clientY;
 
     switch (e.type) {
       case "mousedown":

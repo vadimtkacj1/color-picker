@@ -21,7 +21,7 @@ export default {
     };
   },
 
-  staticColors: ["#3f1182", "#2c0c5c", "#5e28b0", "#61863b", "#d93897"],
+  staticColors: ["#3f1182", "#2c0c5c", "#5e28b0", "#61863b", "#d93897", "#5e19c9"],
 
   getStaticColors() {
     let colors = "";
@@ -133,8 +133,8 @@ export default {
                 }
 
                 .static-color {
-                  width: 30px;
-                  height: 30px;
+                  width: 25px;
+                  height: 25px;
                   background: blue;
                   border-radius: var(--border-radius); 
                   cursor: pointer;
@@ -161,6 +161,7 @@ export default {
                 }
 
                 #current-color {
+                  font-size: 15px;
                   width: 60px;
                   text-align: center;
                   box-shadow: none;
@@ -189,6 +190,7 @@ export default {
                 .format {
                   cursor: pointer;
                   margin-right: 5px;
+                  font-size: 15px;
                 }
                 
                 .sliders {

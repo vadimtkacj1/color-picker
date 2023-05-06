@@ -54,12 +54,12 @@ class CoordPicker extends HTMLElement {
     this.dom.thumb.style.width = this.offsetHeight / 10 + "px";
     this.dom.thumb.style.height = this.offsetHeight / 10 + "px";
 
-    document.addEventListener("mousemove", (e) => this.eventHandler(e));
-    document.addEventListener("mouseup", (e) => this.eventHandler(e));
-    this.addEventListener("mousedown", (e) => this.eventHandler(e));
-    document.addEventListener("touchmove", (e) => this.eventHandler(e));
-    document.addEventListener("touchend", (e) => this.eventHandler(e));
-    this.addEventListener("touchstart", this.eventHandler.bind(this), { passive: false });
+    document.addEventListener("mousemove", this.eventHandlerMouse(this));
+    document.addEventListener("mouseup", this.eventHandlerMouse.bind(this));
+    this.addEventListener("mousedown", this.eventHandlerMouse.bind(this));
+    document.addEventListener("touchmove", this.eventHandlerTouch.bind(this));
+    document.addEventListener("touchend", this.eventHandlerTouch.bind(this));
+    this.addEventListener("touchstart", this.eventHandlerTouch.bind(this), { passive: false });
   }
 
   attributeChangedCallback(name, oldVal, newValue) {
@@ -93,23 +93,22 @@ class CoordPicker extends HTMLElement {
     }
   }
 
-  eventHandler(e) {
+  eventHandlerTouch(e) {
+    this.eventHandler(e, e.changedTouches[0]);
+  }
+
+  eventHandlerMouse(e) {
+    this.eventHandler(e, e);
+  }
+
+  eventHandler(event, elem) {
     const bounds = this.getBoundingClientRect();
-    let coords;
+    const coords = {
+      x: elem.clientX - bounds.left,
+      y: elem.clientY - bounds.top,
+    };
 
-    if (e instanceof TouchEvent) {
-      coords = {
-        x: e.changedTouches[0].clientX - bounds.left,
-        y: e.changedTouches[0].clientY - bounds.top,
-      };
-    } else {
-      coords = {
-        x: e.clientX - bounds.left,
-        y: e.clientY - bounds.top,
-      };
-    }
-
-    switch (e.type) {
+    switch (event.type) {
       case "mousedown":
       case "touchstart":
         this.isDragging = true;
@@ -133,34 +132,34 @@ class CoordPicker extends HTMLElement {
   }
 
   updateCoord(x, y) {
-    let hPos = x;
-    let vPos = y;
+    let posX = x;
+    let posY = y;
 
-    if (hPos > this.offsetWidth) {
-      hPos = this.offsetWidth;
+    if (posX > this.offsetWidth) {
+      posX = this.offsetWidth;
     }
 
-    if (hPos < 0) {
-      hPos = 0;
+    if (posX < 0) {
+      posX = 0;
     }
 
-    if (vPos > this.offsetHeight) {
-      vPos = this.offsetHeight;
+    if (posY > this.offsetHeight) {
+      posY = this.offsetHeight;
     }
 
-    if (vPos < 0) {
-      vPos = 0;
+    if (posY < 0) {
+      posY = 0;
     }
 
-    this.x = (hPos / this.offsetWidth) * 100;
-    this.y = (vPos / this.offsetHeight) * 100;
+    this.x = (posX / this.offsetWidth) * 100;
+    this.y = (posY / this.offsetHeight) * 100;
   }
 
   disconnectedCallback() {
-    document.removeEventListener("mousemove", this.eventHandler.bind(this));
-    document.removeEventListener("mouseup", this.eventHandler.bind(this));
-    document.removeEventListener("touchmove", this.eventHandler.bind(this));
-    document.removeEventListener("touchend", this.eventHandler.bind(this));
+    document.removeEventListener("mousemove", this.eventHandlerMouse.bind(this));
+    document.removeEventListener("mouseup", this.eventHandlerMouse.bind(this));
+    document.removeEventListener("touchmove", this.eventHandlerTouch.bind(this));
+    document.removeEventListener("touchend", this.eventHandlerTouch.bind(this));
   }
 
   refreshCoordinates() {

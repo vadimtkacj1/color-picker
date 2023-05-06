@@ -94,12 +94,12 @@ class Range extends HTMLElement {
   }
 
   connectedCallback() {
-    document.addEventListener("mousemove", this.eventHandler.bind(this));
-    document.addEventListener("mouseup", this.eventHandler.bind(this));
-    this.dom.overlay.addEventListener("mousedown", this.eventHandler.bind(this));
-    document.addEventListener("touchmove", this.eventHandler.bind(this));
-    document.addEventListener("touchend", this.eventHandler.bind(this));
-    this.dom.overlay.addEventListener("touchstart", this.eventHandler.bind(this), { passive: false });
+    document.addEventListener("mousemove", this.eventHandlerMouse.bind(this));
+    document.addEventListener("mouseup", this.eventHandlerMouse.bind(this));
+    this.dom.overlay.addEventListener("mousedown", this.eventHandlerMouse.bind(this));
+    document.addEventListener("touchmove", this.eventHandlerTouch.bind(this));
+    document.addEventListener("touchend", this.eventHandlerTouch.bind(this));
+    this.dom.overlay.addEventListener("touchstart", this.eventHandlerTouch.bind(this), { passive: false });
 
     if (!this.maxValue) {
       this.maxValue = Range.DEFAULT_MAXVALUE;
@@ -119,10 +119,18 @@ class Range extends HTMLElement {
   }
 
   disconnectedCallback() {
-    document.removeEventListener("mousemove", this.eventHandler.bind(this));
-    document.removeEventListener("mouseup", this.eventHandler.bind(this));
-    document.removeEventListener("touchmove", this.eventHandler.bind(this));
-    document.removeEventListener("touchend", this.eventHandler.bind(this));
+    document.removeEventListener("mousemove", this.eventHandlerMouse.bind(this));
+    document.removeEventListener("mouseup", this.eventHandlerMouse.bind(this));
+    document.removeEventListener("touchmove", this.eventHandlerTouch.bind(this));
+    document.removeEventListener("touchend", this.eventHandlerTouch.bind(this));
+  }
+
+  eventHandlerTouch(e) {
+    this.eventHandler(e, e.changedTouches[0]);
+  }
+
+  eventHandlerMouse(e) {
+    this.eventHandler(e, e);
   }
 
   refreshRange() {}

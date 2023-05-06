@@ -12,17 +12,17 @@ class RangeX extends Range {
   }
 
   updateX(x) {
-    let hPos = x;
+    let pos = x;
 
-    if (hPos > this.dom.overlay.offsetWidth) {
-      hPos = this.dom.overlay.offsetWidth;
+    if (pos > this.dom.overlay.offsetWidth) {
+      pos = this.dom.overlay.offsetWidth;
     }
 
-    if (hPos < 0) {
-      hPos = 0;
+    if (pos < 0) {
+      pos = 0;
     }
 
-    this.value = (hPos / this.dom.overlay.offsetWidth) * this.maxValue;
+    this.value = (pos / this.dom.overlay.offsetWidth) * this.maxValue;
   }
 
   refreshRange(value) {
@@ -30,15 +30,9 @@ class RangeX extends Range {
     this.dom.valueRange.value = Math.ceil(value);
   }
 
-  eventHandler(e) {
+  eventHandler(e, elem) {
     const bounds = this.getBoundingClientRect();
-    let x;
-
-    if (e instanceof TouchEvent) {
-      x = e.changedTouches[0].clientX - bounds.left;
-    } else {
-      x = e.clientX - bounds.left;
-    }
+    const x = elem.clientX - bounds.left;
 
     switch (e.type) {
       case "touchstart":

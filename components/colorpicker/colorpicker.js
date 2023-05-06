@@ -29,14 +29,14 @@ class ColorPicker extends HTMLElement {
     this.dom.colorOfColorPicker.style.width = this.dom.inputColor.offsetHeight / 1.5 + "px";
     this.dom.colorOfColorPicker.style.height = this.dom.inputColor.offsetHeight / 1.5 + "px";
 
-    this.dom.currentColor.addEventListener("change", (e) => this.onСurrentColor(e));
-    this.dom.content.addEventListener("change-position-thumb", (e) => this.onContent(e));
-    this.dom.formats.addEventListener("click", (e) => this.onFormats(e));
-    this.dom.inputColor.addEventListener("change", (e) => this.onСurrentColor(e));
-    this.dom.colorOfColorPicker.addEventListener("click", (e) => this.showColorPicker(e));
-    this.dom.wrapperColorPicker.addEventListener("click", (e) => this.hideColorPicker(e));
-    this.dom.copyColor.addEventListener("click", () => this.copyColor());
-    this.dom.staticColors.addEventListener("click", (e) => this.onStaticColor(e));
+    this.dom.currentColor.addEventListener("change", this.onСurrentColor.bind(this));
+    this.dom.content.addEventListener("change-position-thumb", this.onChangePositionThumb.bind(this));
+    this.dom.formats.addEventListener("click", this.onFormats.bind(this));
+    this.dom.inputColor.addEventListener("change", this.onСurrentColor.bind(this));
+    this.dom.colorOfColorPicker.addEventListener("click", this.showColorPicker.bind(this));
+    this.dom.wrapperColorPicker.addEventListener("click", this.hideColorPicker.bind(this));
+    this.dom.copyColor.addEventListener("click", this.copyColor.bind(this));
+    this.dom.staticColors.addEventListener("click", this.onStaticColor.bind(this));
 
     window.addEventListener("scroll", this.positionColorPicker.bind(this));
     this.positionColorPicker();
@@ -113,7 +113,7 @@ class ColorPicker extends HTMLElement {
     }
   }
 
-  onContent(e) {
+  onChangePositionThumb(e) {
     this.#isChangedContentOfHue = true;
 
     const target = e.target;
