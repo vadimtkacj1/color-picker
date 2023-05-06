@@ -94,12 +94,20 @@ class CoordPicker extends HTMLElement {
   }
 
   eventHandler(e) {
-    e.preventDefault();
     const bounds = this.getBoundingClientRect();
-    const coords = {
-      x: e.clientX - bounds.left,
-      y: e.clientY - bounds.top,
-    };
+    let coords;
+
+    if (e instanceof TouchEvent) {
+      coords = {
+        x: e.changedTouches[0].clientX - bounds.left,
+        y: e.changedTouches[0].clientY - bounds.top,
+      };
+    } else {
+      coords = {
+        x: e.clientX - bounds.left,
+        y: e.clientY - bounds.top,
+      };
+    }
 
     switch (e.type) {
       case "mousedown":

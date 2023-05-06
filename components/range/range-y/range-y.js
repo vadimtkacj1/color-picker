@@ -29,9 +29,14 @@ class RangeY extends Range {
   }
 
   eventHandler(e) {
-    e.preventDefault();
     const bounds = this.getBoundingClientRect();
-    const y = bounds.bottom - e.clientY;
+    let y = bounds.bottom - e.clientY;
+
+    if (e instanceof TouchEvent) {
+      y = bounds.bottom - e.changedTouches[0].clientY;
+    } else {
+      y = bounds.bottom - e.clientY;
+    }
 
     switch (e.type) {
       case "mousedown":

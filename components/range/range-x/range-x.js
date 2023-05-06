@@ -31,12 +31,18 @@ class RangeX extends Range {
   }
 
   eventHandler(e) {
-    e.preventDefault();
     const bounds = this.getBoundingClientRect();
-    const x = e.clientX - bounds.left;
+    let x;
+
+    if (e instanceof TouchEvent) {
+      x = e.changedTouches[0].clientX - bounds.left;
+    } else {
+      x = e.clientX - bounds.left;
+    }
+
     switch (e.type) {
-      case "mousedown":
       case "touchstart":
+      case "mousedown":
         this.isdragging = true;
         this.updateX(x);
         this.refreshRange(this.value);
@@ -47,8 +53,8 @@ class RangeX extends Range {
         this.isdragging = false;
         break;
 
-      case "mousemove":
       case "touchmove":
+      case "mousemove":
         if (this.isdragging) {
           this.updateX(x);
           this.refreshRange(this.value);
