@@ -30,6 +30,7 @@ export default {
       box-shadow: none;
       border: none;
       color: var(--text-color);
+      background-color: var(--background-color);
     }
 
     #bg-overlay {

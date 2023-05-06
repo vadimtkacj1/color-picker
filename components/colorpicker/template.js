@@ -65,6 +65,7 @@ export default {
                   font-family: "Inter", sans-serif;
                   --text-color: #B3B3B3; 
                   --border-radius: 5px;
+                  --background-color: #fafafa;
                 }
                 
                 #wrapper-color-picker {
@@ -97,7 +98,7 @@ export default {
                 }
 
                 #color-picker {
-                    background-color: #fafafa;
+                    background-color: var(--background-color);
                     border-radius: var(--border-radius);
                     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                     height: 300px;
@@ -165,6 +166,7 @@ export default {
                   box-shadow: none;
                   border: none;
                   color: var(--text-color);
+                  background-color: var(--background-color);
                 }
                 
                 .choose-color {
