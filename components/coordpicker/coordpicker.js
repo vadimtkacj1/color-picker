@@ -59,7 +59,7 @@ class CoordPicker extends HTMLElement {
     this.addEventListener("mousedown", (e) => this.eventHandler(e));
     document.addEventListener("touchmove", (e) => this.eventHandler(e));
     document.addEventListener("touchend", (e) => this.eventHandler(e));
-    this.addEventListener("touchstart", this.eventHandler.bind(this));
+    this.addEventListener("touchstart", this.eventHandler.bind(this), { passive: false });
   }
 
   attributeChangedCallback(name, oldVal, newValue) {
