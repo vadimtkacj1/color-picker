@@ -34,24 +34,23 @@ class RangeY extends Range {
 
     switch (e.type) {
       case "mousedown":
+      case "touchstart":
         this.isdragging = true;
         this.updateY(y);
         this.refreshRange(this.value);
         break;
 
       case "mouseup":
+      case "touchend":
         this.isdragging = false;
         break;
 
       case "mousemove":
+      case "touchmove":
         if (this.isdragging) {
           this.updateY(y);
           this.refreshRange(this.value);
         }
-        break;
-
-      case "mouseout":
-        this.isdragging = false;
         break;
     }
   }

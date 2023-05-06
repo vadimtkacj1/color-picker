@@ -54,9 +54,12 @@ class CoordPicker extends HTMLElement {
     this.dom.thumb.style.width = this.offsetHeight / 10 + "px";
     this.dom.thumb.style.height = this.offsetHeight / 10 + "px";
 
-    this.addEventListener("mousemove", (e) => this.eventHandler(e));
-    this.addEventListener("mouseup", (e) => this.eventHandler(e));
+    document.addEventListener("mousemove", (e) => this.eventHandler(e));
+    document.addEventListener("mouseup", (e) => this.eventHandler(e));
     this.addEventListener("mousedown", (e) => this.eventHandler(e));
+    document.addEventListener("touchmove", (e) => this.eventHandler(e));
+    document.addEventListener("touchend", (e) => this.eventHandler(e));
+    this.addEventListener("touchstart", (e) => this.eventHandler(e), { passive: true });
   }
 
   attributeChangedCallback(name, oldVal, newValue) {
@@ -99,16 +102,19 @@ class CoordPicker extends HTMLElement {
 
     switch (e.type) {
       case "mousedown":
+      case "touchstart":
         this.isDragging = true;
         this.updateCoord(coords.x, coords.y);
         this.refreshCoordinates();
         break;
 
       case "mouseup":
+      case "touchend":
         this.isDragging = false;
         break;
 
       case "mousemove":
+      case "touchmove":
         if (this.isDragging) {
           this.updateCoord(coords.x, coords.y);
           this.refreshCoordinates();
