@@ -94,12 +94,11 @@ class Range extends HTMLElement {
   }
 
   connectedCallback() {
-    document.addEventListener("mousemove", (e) => this.eventHandler(e));
-    document.addEventListener("mouseup", (e) => this.eventHandler(e));
-    this.dom.overlay.addEventListener("mousedown", (e) => this.eventHandler(e));
-    document.addEventListener("touchmove", (e) => this.eventHandler(e));
-    document.addEventListener("touchend", (e) => this.eventHandler(e));
-    this.dom.overlay.addEventListener("touchstart", (e) => this.eventHandler(e), { passive: true });
+    document.addEventListener("mousemove", this.eventHandler.bind(this));
+    document.addEventListener("mouseup", this.eventHandler.bind(this));
+    this.dom.overlay.addEventListener("mousedown", this.eventHandler.bind(this));
+    document.addEventListener("touchmove", this.eventHandler.bind(this));
+    document.addEventListener("touchend", this.eventHandler.bind(this));
 
     if (!this.maxValue) {
       this.maxValue = Range.DEFAULT_MAXVALUE;
@@ -116,6 +115,13 @@ class Range extends HTMLElement {
 
   setColor(color) {
     this.dom.overlay.style.background = color;
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener("mousemove", this.eventHandler.bind(this));
+    document.removeEventListener("mouseup", this.eventHandler.bind(this));
+    document.removeEventListener("touchmove", this.eventHandler.bind(this));
+    document.removeEventListener("touchend", this.eventHandler.bind(this));
   }
 
   refreshRange() {}

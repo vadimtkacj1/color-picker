@@ -8,7 +8,7 @@ class RangeX extends Range {
     this.dom = Template.mapDOM(this.shadowRoot);
 
     this.changeSizeThumb(this.offsetHeight);
-    this.dom.valueRange.addEventListener("change", (e) => this.eventHandlerInput(e));
+    this.dom.valueRange.addEventListener("change", this.eventHandlerInput.bind(this));
   }
 
   updateX(x) {
@@ -33,10 +33,8 @@ class RangeX extends Range {
   eventHandler(e) {
     const bounds = this.getBoundingClientRect();
     const x = e.clientX - bounds.left;
-
     switch (e.type) {
       case "mousedown":
-      case "touchstart":
         this.isdragging = true;
         this.updateX(x);
         this.refreshRange(this.value);

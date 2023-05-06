@@ -38,8 +38,12 @@ class ColorPicker extends HTMLElement {
     this.dom.copyColor.addEventListener("click", () => this.copyColor());
     this.dom.staticColors.addEventListener("click", (e) => this.onStaticColor(e));
 
-    window.addEventListener("scroll", () => this.positionColorPicker());
+    window.addEventListener("scroll", this.positionColorPicker.bind(this));
     this.positionColorPicker();
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener("scroll", this.positionColorPicker.bind(this));
   }
 
   onStaticColor(e) {

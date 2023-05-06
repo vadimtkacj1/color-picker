@@ -34,7 +34,6 @@ class RangeY extends Range {
 
     switch (e.type) {
       case "mousedown":
-      case "touchstart":
         this.isdragging = true;
         this.updateY(y);
         this.refreshRange(this.value);
