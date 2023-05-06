@@ -93,6 +93,7 @@ class CoordPicker extends HTMLElement {
   }
 
   eventHandler(e) {
+    e.preventDefault();
     const bounds = this.getBoundingClientRect();
     const coords = {
       x: e.clientX - bounds.left,

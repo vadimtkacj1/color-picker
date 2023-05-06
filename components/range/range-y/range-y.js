@@ -29,6 +29,7 @@ class RangeY extends Range {
   }
 
   eventHandler(e) {
+    e.preventDefault();
     const bounds = this.getBoundingClientRect();
     const y = bounds.bottom - e.clientY;
 

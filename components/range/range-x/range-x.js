@@ -31,6 +31,7 @@ class RangeX extends Range {
   }
 
   eventHandler(e) {
+    e.preventDefault();
     const bounds = this.getBoundingClientRect();
     const x = e.clientX - bounds.left;
     switch (e.type) {
