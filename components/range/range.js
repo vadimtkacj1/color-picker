@@ -99,6 +99,7 @@ class Range extends HTMLElement {
     this.dom.overlay.addEventListener("mousedown", this.eventHandler.bind(this));
     document.addEventListener("touchmove", this.eventHandler.bind(this));
     document.addEventListener("touchend", this.eventHandler.bind(this));
+    this.dom.overlay.addEventListener("touchstart", this.eventHandler.bind(this));
 
     if (!this.maxValue) {
       this.maxValue = Range.DEFAULT_MAXVALUE;

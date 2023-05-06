@@ -36,6 +36,7 @@ class RangeX extends Range {
     const x = e.clientX - bounds.left;
     switch (e.type) {
       case "mousedown":
+      case "touchstart":
         this.isdragging = true;
         this.updateX(x);
         this.refreshRange(this.value);

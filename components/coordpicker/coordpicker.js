@@ -59,6 +59,7 @@ class CoordPicker extends HTMLElement {
     this.addEventListener("mousedown", (e) => this.eventHandler(e));
     document.addEventListener("touchmove", (e) => this.eventHandler(e));
     document.addEventListener("touchend", (e) => this.eventHandler(e));
+    this.addEventListener("touchstart", this.eventHandler.bind(this));
   }
 
   attributeChangedCallback(name, oldVal, newValue) {
@@ -102,6 +103,7 @@ class CoordPicker extends HTMLElement {
 
     switch (e.type) {
       case "mousedown":
+      case "touchstart":
         this.isDragging = true;
         this.updateCoord(coords.x, coords.y);
         this.refreshCoordinates();
